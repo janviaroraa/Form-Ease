@@ -126,7 +126,16 @@ class FormViewController: UIViewController {
         if genderField.selectedSegmentIndex == UISegmentedControl.noSegment {
             showAlert(message: "Please select your gender.")
         }
-        navigationController?.pushViewController(DetailViewcontroller(), animated: true)
+        
+        let vc = DetailViewcontroller()
+        vc.enteredFirstName = firstNameTextField.text ?? ""
+        vc.enteredLastName = lastNameTextField.text ?? ""
+        vc.enteredAge = ageTextField.text ?? ""
+        vc.enteredGender = genderField.titleForSegment(at: genderField.selectedSegmentIndex) ?? ""
+        
+        navigationController?.pushViewController(vc, animated: true)
+        
+        clearForm()
     }
     
     private func checkEmptyFieldsBeforeSaving() -> Bool {
@@ -136,6 +145,13 @@ class FormViewController: UIViewController {
             return first.isEmpty || last.isEmpty || age.isEmpty
         }
         return false
+    }
+    
+    private func clearForm() {
+        firstNameTextField.text = ""
+        lastNameTextField.text = ""
+        ageTextField.text = ""
+        genderField.selectedSegmentIndex = UISegmentedControl.noSegment
     }
 
     override func viewDidLoad() {

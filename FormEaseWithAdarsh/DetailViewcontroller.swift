@@ -9,6 +9,11 @@ import UIKit
 
 class DetailViewcontroller: UIViewController {
     
+    var enteredFirstName: String = ""
+    var enteredLastName: String = ""
+    var enteredAge: String = ""
+    var enteredGender: String = ""
+    
     private lazy var titleLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Details"
@@ -26,9 +31,19 @@ class DetailViewcontroller: UIViewController {
         return lbl
     }()
     
-    private lazy var nameSpace: UILabel = {
+    private lazy var firstNameSpace: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Entered name"
+        lbl.text = enteredFirstName
+        lbl.textColor = .systemGray
+        lbl.textAlignment = .left
+        lbl.font = UIFont.systemFont(ofSize: 14)
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        return lbl
+    }()
+    
+    private lazy var lastNameSpace: UILabel = {
+        let lbl = UILabel()
+        lbl.text = enteredLastName
         lbl.textColor = .systemGray
         lbl.textAlignment = .left
         lbl.font = UIFont.systemFont(ofSize: 14)
@@ -47,7 +62,7 @@ class DetailViewcontroller: UIViewController {
     
     private lazy var ageSpace: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Entered age"
+        lbl.text = enteredAge
         lbl.textColor = .systemGray
         lbl.textAlignment = .left
         lbl.font = UIFont.systemFont(ofSize: 14)
@@ -66,7 +81,7 @@ class DetailViewcontroller: UIViewController {
     
     private lazy var genderSpace: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Entered gender"
+        lbl.text = enteredGender
         lbl.textColor = .systemGray
         lbl.textAlignment = .left
         lbl.font = UIFont.systemFont(ofSize: 14)
@@ -84,7 +99,8 @@ class DetailViewcontroller: UIViewController {
     
     private func addViews() {
         view.addSubview(nameLabel)
-        view.addSubview(nameSpace)
+        view.addSubview(firstNameSpace)
+        view.addSubview(lastNameSpace)
         view.addSubview(ageLabel)
         view.addSubview(ageSpace)
         view.addSubview(genderLabel)
@@ -95,11 +111,16 @@ class DetailViewcontroller: UIViewController {
         nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
         nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -20).isActive = true
         
-        nameSpace.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor).isActive = true
-        nameSpace.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5).isActive = true
+        firstNameSpace.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor).isActive = true
+        firstNameSpace.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -50).isActive = true
+        firstNameSpace.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5).isActive = true
+        
+        lastNameSpace.leadingAnchor.constraint(equalTo: firstNameSpace.trailingAnchor, constant: 5).isActive = true
+        lastNameSpace.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+        lastNameSpace.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5).isActive = true
         
         ageLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor).isActive = true
-        ageLabel.topAnchor.constraint(equalTo: nameSpace.bottomAnchor, constant: 24).isActive = true
+        ageLabel.topAnchor.constraint(equalTo: firstNameSpace.bottomAnchor, constant: 24).isActive = true
         
         ageSpace.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor).isActive = true
         ageSpace.topAnchor.constraint(equalTo: ageLabel.bottomAnchor, constant: 5).isActive = true
