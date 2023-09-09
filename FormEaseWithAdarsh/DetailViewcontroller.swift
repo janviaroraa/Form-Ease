@@ -17,37 +17,18 @@ class DetailViewcontroller: UIViewController {
         return lbl
     }()
     
-    private lazy var firstNameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "First Name"
+        lbl.text = "Name"
         lbl.textAlignment = .left
         lbl.font = UIFont.systemFont(ofSize: 18)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
     
-    private lazy var firstNameSpace: UILabel = {
+    private lazy var nameSpace: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Entered first name"
-        lbl.textColor = .systemGray
-        lbl.textAlignment = .left
-        lbl.font = UIFont.systemFont(ofSize: 14)
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        return lbl
-    }()
-    
-    private lazy var lastNameLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "Last Name"
-        lbl.textAlignment = .left
-        lbl.font = UIFont.systemFont(ofSize: 18)
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        return lbl
-    }()
-    
-    private lazy var lastNameSpace: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "Entered last name"
+        lbl.text = "Entered name"
         lbl.textColor = .systemGray
         lbl.textAlignment = .left
         lbl.font = UIFont.systemFont(ofSize: 14)
@@ -102,10 +83,8 @@ class DetailViewcontroller: UIViewController {
     }
     
     private func addViews() {
-        view.addSubview(firstNameLabel)
-        view.addSubview(firstNameSpace)
-        view.addSubview(lastNameLabel)
-        view.addSubview(lastNameSpace)
+        view.addSubview(nameLabel)
+        view.addSubview(nameSpace)
         view.addSubview(ageLabel)
         view.addSubview(ageSpace)
         view.addSubview(genderLabel)
@@ -113,28 +92,22 @@ class DetailViewcontroller: UIViewController {
     }
     
     private func addConstraints() {
-        firstNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        firstNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -20).isActive = true
+        nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -20).isActive = true
         
-        firstNameSpace.leadingAnchor.constraint(equalTo: firstNameLabel.leadingAnchor).isActive = true
-        firstNameSpace.topAnchor.constraint(equalTo: firstNameLabel.bottomAnchor, constant: 5).isActive = true
+        nameSpace.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor).isActive = true
+        nameSpace.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5).isActive = true
         
-        lastNameLabel.leadingAnchor.constraint(equalTo: firstNameLabel.leadingAnchor).isActive = true
-        lastNameLabel.topAnchor.constraint(equalTo: firstNameSpace.bottomAnchor, constant: 24).isActive = true
+        ageLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor).isActive = true
+        ageLabel.topAnchor.constraint(equalTo: nameSpace.bottomAnchor, constant: 24).isActive = true
         
-        lastNameSpace.leadingAnchor.constraint(equalTo: firstNameLabel.leadingAnchor).isActive = true
-        lastNameSpace.topAnchor.constraint(equalTo: lastNameLabel.bottomAnchor, constant: 5).isActive = true
-        
-        ageLabel.leadingAnchor.constraint(equalTo: firstNameLabel.leadingAnchor).isActive = true
-        ageLabel.topAnchor.constraint(equalTo: lastNameSpace.bottomAnchor, constant: 24).isActive = true
-        
-        ageSpace.leadingAnchor.constraint(equalTo: firstNameLabel.leadingAnchor).isActive = true
+        ageSpace.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor).isActive = true
         ageSpace.topAnchor.constraint(equalTo: ageLabel.bottomAnchor, constant: 5).isActive = true
         
-        genderLabel.leadingAnchor.constraint(equalTo: firstNameLabel.leadingAnchor).isActive = true
+        genderLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor).isActive = true
         genderLabel.topAnchor.constraint(equalTo: ageSpace.bottomAnchor, constant: 24).isActive = true
         
-        genderSpace.leadingAnchor.constraint(equalTo: firstNameLabel.leadingAnchor).isActive = true
+        genderSpace.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor).isActive = true
         genderSpace.topAnchor.constraint(equalTo: genderLabel.bottomAnchor, constant: 5).isActive = true
     }
     
