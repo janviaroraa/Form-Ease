@@ -112,6 +112,7 @@ class DetailViewcontroller: UIViewController {
         nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -20).isActive = true
         
         firstNameSpace.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor).isActive = true
+        firstNameSpace.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: -340).isActive = true
         firstNameSpace.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -50).isActive = true
         firstNameSpace.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5).isActive = true
         
