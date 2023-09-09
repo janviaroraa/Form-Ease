@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FormViewController: UIViewController, UITextFieldDelegate {
+class FormViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let lbl = UILabel()
@@ -120,7 +120,22 @@ class FormViewController: UIViewController, UITextFieldDelegate {
     }()
     
     @objc private func saveButtonClicked() {
+        if checkEmptyFieldsBeforeSaving() {
+            showAlert(message: "Please enter all the details before saving the form.")
+        }
+        if genderField.selectedSegmentIndex == UISegmentedControl.noSegment {
+            showAlert(message: "Please select your gender.")
+        }
         navigationController?.pushViewController(DetailViewcontroller(), animated: true)
+    }
+    
+    private func checkEmptyFieldsBeforeSaving() -> Bool {
+        if let first = firstNameTextField.text,
+           let last = lastNameTextField.text,
+           let age = ageTextField.text {
+            return first.isEmpty || last.isEmpty || age.isEmpty
+        }
+        return false
     }
 
     override func viewDidLoad() {
@@ -142,6 +157,10 @@ class FormViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(ageTextField)
         view.addSubview(genderField)
         view.addSubview(saveButton)
+        
+        firstNameTextField.tag = 1
+        lastNameTextField.tag = 2
+        ageTextField.tag = 3
     }
     
     private func addConstraints() {
@@ -190,6 +209,69 @@ class FormViewController: UIViewController, UITextFieldDelegate {
         saveButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
     }
     
+}
+
+extension FormViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        if let text = textField.text, text.isEmpty {
+            textField.layer.borderColor = UIColor.systemRed.cgColor
+            switch textField.tag {
+            case 1:
+                showAlert(message: "Please enter first name")
+            case 2:
+                showAlert(message: "Please enter last name")
+            case 3:
+                showAlert(message: "Please enter age")
+            default:
+                break
+            }
+        }
+        
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if let text = textField.text, !text.isEmpty {
+            textField.layer.borderColor = UIColor.black.cgColor
+            switch textField.tag {
+            case 1:
+                if !(string.rangeOfCharacter(from: CharacterSet.letters.inverted) == nil) {
+                    showAlert(message: "Enter only alphabets for your first name. Numerical symbols are not allowed here")
+                }
+            case 2:
+                if !(string.rangeOfCharacter(from: CharacterSet.letters.inverted) == nil) {
+                    showAlert(message: "Enter only alphabets for your first name. Numerical symbols are not allowed here")
+                }
+            case 3:
+                if !(string.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil) {
+                    showAlert(message: "Enter only numerical number for your age")
+                }
+                else if let age = Int(text + string), age < 0 || age > 150 {
+                    showAlert(message: "Age should be between 0 and 150")
+                }
+            default:
+                break
+            }
+        }
+
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+    }
+    
+    func showAlert(message: String) {
+        let action = UIAlertAction(title: "OK", style: .default)
+        
+        let alert = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
+        alert.addAction(action)
+        
+        present(alert, animated: true)
+    }
 }
 
 extension FormViewController {
