@@ -66,6 +66,7 @@ class FormViewController: UIViewController, UITextFieldDelegate {
     private lazy var firstNameTextField: UITextField = {
         let txt = UITextField()
         txt.placeholder = "Enter first name"
+        txt.font = UIFont.systemFont(ofSize: 14)
         txt.borderStyle = .roundedRect
         txt.translatesAutoresizingMaskIntoConstraints = false
         txt.layer.borderWidth = 1
@@ -78,6 +79,7 @@ class FormViewController: UIViewController, UITextFieldDelegate {
     private lazy var lastNameTextField: UITextField = {
         let txt = UITextField()
         txt.placeholder = "Enter last name"
+        txt.font = UIFont.systemFont(ofSize: 14)
         txt.borderStyle = .roundedRect
         txt.translatesAutoresizingMaskIntoConstraints = false
         txt.layer.borderWidth = 1
@@ -90,6 +92,7 @@ class FormViewController: UIViewController, UITextFieldDelegate {
     private lazy var ageTextField: UITextField = {
         let txt = UITextField()
         txt.placeholder = "Enter your age"
+        txt.font = UIFont.systemFont(ofSize: 14)
         txt.borderStyle = .roundedRect
         txt.translatesAutoresizingMaskIntoConstraints = false
         txt.layer.borderWidth = 1
@@ -112,8 +115,13 @@ class FormViewController: UIViewController, UITextFieldDelegate {
         btn.backgroundColor = .systemBlue
         btn.layer.cornerRadius = 10
         btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.addTarget(self, action: #selector(saveButtonClicked), for: .touchUpInside)
         return btn
     }()
+    
+    @objc private func saveButtonClicked() {
+        navigationController?.pushViewController(DetailViewcontroller(), animated: true)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
