@@ -105,6 +105,7 @@ class FormViewController: UIViewController {
     private lazy var genderField: UISegmentedControl = {
         let seg = UISegmentedControl(items: ["Male", "Female"])
         seg.translatesAutoresizingMaskIntoConstraints = false
+        seg.selectedSegmentIndex = 0
         return seg
     }()
     
@@ -122,36 +123,34 @@ class FormViewController: UIViewController {
     @objc private func saveButtonClicked() {
         if checkEmptyFieldsBeforeSaving() {
             showAlert(message: "Please enter all the details before saving the form.")
-        }
-        if genderField.selectedSegmentIndex == UISegmentedControl.noSegment {
+        } else if (genderField.selectedSegmentIndex == UISegmentedControl.noSegment) {
             showAlert(message: "Please select your gender.")
+        } else {
+            let vc = DetailViewcontroller()
+            vc.enteredFirstName = firstNameTextField.text ?? ""
+            vc.enteredLastName = lastNameTextField.text ?? ""
+            vc.enteredAge = ageTextField.text ?? ""
+            vc.enteredGender = genderField.titleForSegment(at: genderField.selectedSegmentIndex) ?? ""
+            
+            navigationController?.pushViewController(vc, animated: true)
+            
+            clearForm()
         }
-        
-        let vc = DetailViewcontroller()
-        vc.enteredFirstName = firstNameTextField.text ?? ""
-        vc.enteredLastName = lastNameTextField.text ?? ""
-        vc.enteredAge = ageTextField.text ?? ""
-        vc.enteredGender = genderField.titleForSegment(at: genderField.selectedSegmentIndex) ?? ""
-        
-        navigationController?.pushViewController(vc, animated: true)
-        
-        clearForm()
     }
     
     private func checkEmptyFieldsBeforeSaving() -> Bool {
-        if let first = firstNameTextField.text,
-           let last = lastNameTextField.text,
-           let age = ageTextField.text {
-            return first.isEmpty || last.isEmpty || age.isEmpty
-        }
-        return false
+        return (
+            firstNameTextField.text?.isEmpty ?? false ||
+            lastNameTextField.text?.isEmpty ?? false ||
+            ageTextField.text?.isEmpty ?? false
+        )
     }
     
     private func clearForm() {
         firstNameTextField.text = ""
         lastNameTextField.text = ""
         ageTextField.text = ""
-        genderField.selectedSegmentIndex = UISegmentedControl.noSegment
+        genderField.selectedSegmentIndex = 0
     }
 
     override func viewDidLoad() {
@@ -276,17 +275,15 @@ extension FormViewController: UITextFieldDelegate {
         return true
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        
-    }
-    
     func showAlert(message: String) {
-        let action = UIAlertAction(title: "OK", style: .default)
-        
-        let alert = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
-        alert.addAction(action)
-        
-        present(alert, animated: true)
+        DispatchQueue.main.async {
+            let action = UIAlertAction(title: "OK", style: .default)
+            
+            let alert = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
+            alert.addAction(action)
+            
+            self.present(alert, animated: true)
+        }
     }
 }
 
